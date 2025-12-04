@@ -30,7 +30,9 @@
         <button>Cadastrar um novo Produto</button>
     </a>
 
-    <a href="../../index.php"></a>
+    <a href="../../index.php">
+        <button>Voltar à página inicial</button>
+    </a>
     
 </body>
 </html>
