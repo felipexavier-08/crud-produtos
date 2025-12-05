@@ -2,11 +2,11 @@
 
     class Conexao {
 
-        private static string $server = "sql213.yzz.me ";
-        private static string $dbname = "yzzme_40601915_loja";
-        private static string $port = "3306";
-        private static string $user = "	yzzme_40601915";
-        private static string $password = "felipe987";
+        private static string $server = "localhost";
+        private static string $dbname = "loja";
+        private static string $port = "3307";
+        private static string $user = "root";
+        private static string $password = "";
 
         public static function fazerConexao(): PDO {
 
