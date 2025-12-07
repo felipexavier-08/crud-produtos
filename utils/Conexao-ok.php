@@ -8,7 +8,7 @@
         private static string $user = "root";
         private static string $password = "";
 
-        public static function fazerConexao(): PDO {
+        public function fazerConexao(): PDO {
 
             try{
 

@@ -16,7 +16,7 @@
         <input type="text" id="nome_produto" name= "nome_produto" placeholder = "Digite o nome do Produto">
         <br>
         <label for="preco_produto">Preço: </label>
-        <input type="number" id="preco_produto" name="preco_produto" placeholder="Insira o preço do produto em reais">
+        <input type="number" id="preco_pro  duto" name="preco_produto" placeholder="Insira o preço do produto em reais">
         <br>
 
         <button>Registrar</button>

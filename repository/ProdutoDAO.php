@@ -9,12 +9,15 @@
         public function __construct(){
 
             try{
+
                 $this->pdo = Conexao::fazerConexao();
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
-            } catch(PDOException $e){
 
-                die("Erro ao conectar a partir do ProdutoDAO: " . $e->getMessage());
+
+            } catch(PDOException $e) {
+
+                die("Erro na conexão em ProdutoDAO: " . $e->getMessage());
 
             }
 
@@ -23,15 +26,16 @@
         public function registrarProduto(Produto $Produto){
 
             try{
-                $sql = "INSERT INTO produto(nome_produto, preco_produto) VALUES(:nome_produto, :preco_produto)";
+
+                $sql = "INSERT INTO produto(nome_produto, preco_produto) VALUES (:nome_produto, :preco_produto)";
 
                 $stmt = $this->pdo->prepare($sql);
-                $stmt->bindValue(":nome_produto", $Produto->getNomeProduto(),PDO::PARAM_STR );
-                $stmt->bindValue("preco_produto", $Produto->getPrecoProduto(), PDO::PARAM_INT);
-
+                $stmt->bindValue(":nome_produto", $Produto->getNomeProduto(), PDO::PARAM_STR);
+                $stmt ->bindValue("preco_produto", $Produto->getPrecoProduto(), PDO::PARAM_INT);
                 return $stmt->execute();
 
-            }catch(PDOException $e) {
+
+            } catch(PDOException $e) {
 
                 echo("Erro em ProdutoDAO ao registrar produto: " . $e->getMessage());
 
