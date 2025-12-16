@@ -8,7 +8,7 @@
             $this->dao = new ProdutoDAO();
         }
 
-        public function create(string $method): string {
+        public function create(string $method): bool|string {
             if($method === "GET"){
                 require __DIR__ . "/../views/cadastroProdutos.php";
                 return "";
@@ -28,9 +28,9 @@
             }
         }
 
-        public function list(string $method): array {
+        public function listar(string $method): array {
             if ($method === "GET") {
-                $Produtos = $this->dao->listaProdutos();
+                $Produtos = $this->dao->listarProdutos();
                 return $Produtos;
             }
             return "Método não suportado.";

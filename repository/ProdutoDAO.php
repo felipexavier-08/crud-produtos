@@ -1,25 +1,22 @@
 <?php
-    require_once __DIR__ . "/../utils/Conexao.php";
     require_once __DIR__ . "/../classes/models/Produto.php";
+    require_once __DIR__ . "/../utils/Conexao.php";
 
-    class ProdutoDAO{
-
+    class ProdutoDAO {
         private PDO $pdo;
 
         public function __construct(){
 
             try{
-
+    
                 $this->pdo = Conexao::fazerConexao();
-                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
-
 
             } catch(PDOException $e) {
-
-                die("Erro na conexão em ProdutoDAO: " . $e->getMessage());
-
+    
+                die("Erro ao conectar com o banco de dados em ProdutoDAO: " . $e->getMessage());
+    
             }
+
 
         }
 
@@ -28,37 +25,59 @@
             try{
 
                 $sql = "INSERT INTO produto(nome_produto, preco_produto) VALUES (:nome_produto, :preco_produto)";
-
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->bindValue(":nome_produto", $Produto->getNomeProduto(), PDO::PARAM_STR);
-                $stmt ->bindValue("preco_produto", $Produto->getPrecoProduto(), PDO::PARAM_INT);
-                return $stmt->execute();
+                $stmt->bindValue(":preco_produto", $Produto->getPrecoProduto(), PDO::PARAM_INT);
 
+                return $stmt->execute();
 
             } catch(PDOException $e) {
 
-                echo("Erro em ProdutoDAO ao registrar produto: " . $e->getMessage());
+                die("Erro ao registrar produto: " . $e->getMessage());
+            }           
 
-            }
         }
 
-    
-        public function listaProdutos(): array {
-            try {
-                $sql = "SELECT id_produto, nome_produto, preco_produto FROM produto ORDER BY nome_produto";
+        public function listarProdutos() {
+
+
+            try{
+
+                $sql = "SELECT * FROM produto";
+
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
-                $Produtos = [];
-                while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $Produtos[] = $data; 
-                }            
-                return $Produtos;
 
-            } catch (PDOException $e) {
-                error_log("Erro em Produto DAO (listaProdutos): " . $e->getMessage());
-                return [];
-            } 
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch(PDOException $e){
+
+                die("Erro ao conectar a partir do pdo na listagem de produtos: " . $e->getMessage());
+
+            }   
+    
         }
-        
+
+        public function atualizarProduto(Produto $Produto) {
+
+            try{
+
+                $sql = "UPDATE produto SET nome_produto=:nome_produto, preco_produto=:preco_produto WHERE id_produto=:id_produto";
+    
+                $stmt = $this->dao->prepare($sql);
+                $stmt->bindValue(":id", $Produto->getIdProduto(), PDO::PARAM_INT);
+                $stmt->bindValue(":nome_produto", $Produto->getNomeProduto(), PDO::PARAM_STR);
+                $stmt->bindValue(":preco_produto", $Produto->getPrecoProduto(), PDO::PARAM_INT);
+                
+            } catch(PDOException $e) {
+
+                die("Erro ao atualizar usuario em DAO: " . $e->getMessage());
+
+            }
+
+        }
+
     }
+
+
 ?>

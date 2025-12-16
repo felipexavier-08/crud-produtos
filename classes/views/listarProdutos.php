@@ -1,15 +1,20 @@
 <?php
+
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    session_start();
     require_once __DIR__ . "/../controllers/ProdutoController.php";
     $controller = new ProdutoController();
-    session_start();
-    $Produtos  = $controller->list("GET");
+
+    $Produtos  = $controller->listar("GET");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Lista de Produtos</title>
-    <link rel="stylesheet" href="./css/listarProdutos.css">
+    <link rel="stylesheet" href="../../css/listarProdutos.css">
 </head>
 <body>
 
